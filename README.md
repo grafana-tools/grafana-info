@@ -4,7 +4,9 @@
 
 Displays on the terminal a brief info about Grafana objects.
 It can be useful when you have a lot of backups from Grafana in JSON-files.
-Utility will help you find for example a right dashboard by example-api.175980.tag or panel name.
+Utility will help you find for example a right dashboard by tag or panel name.
+
+The code based on [autograf](https://github.com/grafov/autograf) library.
 
 Planned features:
 
