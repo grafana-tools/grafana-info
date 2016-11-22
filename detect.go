@@ -1,7 +1,29 @@
 package main
 
+/*
+   Displays on terminal brief info about Grafana dashboards and datasources.
+   Copyright (C) 2016  Alexander I.Grafov <grafov@gmail.com>
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+   ॐ तारे तुत्तारे तुरे स्व
+*/
+
 import (
 	"github.com/grafov/autograf/grafana"
+	istty "github.com/mattn/go-isatty"
 
 	"bufio"
 	"bytes"
@@ -13,17 +35,17 @@ import (
 
 func main() {
 	var (
-		key string
-		db  grafana.Board
-		ds  grafana.Datasource
-		err error
+		key        string
+		db         grafana.Board
+		ds         grafana.Datasource
+		err        error
+		isTerminal = istty.IsTerminal(os.Stdout.Fd())
 	)
 	flag.StringVar(&key, "key", "", "API key of Grafana server")
 	flag.Parse()
 	args := flag.Args()
 	if len(args) > 0 {
 		// Read from file(s).
-
 	} else {
 		// Read from stdin.
 		s := bufio.NewScanner(os.Stdin)
@@ -31,16 +53,32 @@ func main() {
 		for s.Scan() {
 			if err = json.Unmarshal(s.Bytes(), &ds); err == nil {
 				if ds.Name != "" && ds.URL != "" {
-					datasourceDisplay.Execute(os.Stdout, ds)
+					outputDatasource(ds, isTerminal)
 					continue
 				}
 			}
 			if err = json.Unmarshal(s.Bytes(), &db); err == nil {
-				dashboardDisplay.Execute(os.Stdout, db)
+				outputDashboard(db, isTerminal)
 				continue
 			}
 			fmt.Fprintln(os.Stderr, "unknown data")
 		}
+	}
+}
+
+func outputDatasource(ds grafana.Datasource, isTerminal bool) {
+	if isTerminal {
+		datasourceDisplay.Execute(os.Stdout, ds)
+	} else {
+		// kv
+	}
+}
+
+func outputDashboard(db grafana.Board, isTerminal bool) {
+	if isTerminal {
+		dashboardDisplay.Execute(os.Stdout, db)
+	} else {
+		// kv
 	}
 }
 
