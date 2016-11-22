@@ -32,11 +32,11 @@ Example output:
 	  | Handler Max AVG [1min] r | DB Max AVG[1min] resp |
 	  | graph                    | graph                 |
 	--- Row Handlers Response Time ---
-	  | Top handlers response ti | Top handlers response | Handler RPS              |
-	  | graph                    | graph                 | table                    |
+	  | Top handlers response ti | Top handlers response | Handler RPS             |
+	  | graph                    | graph                 | table                   |
 	--- Row DB ---
-	  | DB Top Query Duration    | Top Hits Queries count | AVG Response Time by db |
-	  | graph                    | graph                  |                         |
+	  | DB Top Query Duration    | Top Hits Queries coun | AVG Response Time by db |
+	  | graph                    | graph                 |                         |
 
 Or for conjunction with `grep`:
 
